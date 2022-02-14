@@ -1,0 +1,19 @@
+note over browser:
+user writes something into the text field
+and clicks on the submit button
+end note
+
+note over browser:
+browser executes the redrawNotes function
+which appends the note to the bottom of the list
+end note
+
+note over browser:
+browser sends the submitted note as a 
+JSON-string to the server, and preventDefault()
+stops the browser from sending a GET request
+(which would cause a reload)
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+server-->browser: HTTP status code 201

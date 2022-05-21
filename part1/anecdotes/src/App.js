@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 const App = () => {
   const anecdotes = [
@@ -19,8 +19,6 @@ const App = () => {
     voteCount: votes[selected]
   }) // anecdote,votes
 
-
-
   function handleNext() {
     setSelected(Math.floor(Math.random() * 7))
   }
@@ -35,8 +33,6 @@ const App = () => {
       })
     }
   }
-
-
 
   return (
     <div>

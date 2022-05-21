@@ -9,6 +9,30 @@ function calcPos(good, neutral, bad) {
   return good * 100 / (good + neutral + bad)
 }
 
+const Statistics = (
+  { good, neutral, bad, average, positive, feedbackGiven }
+) => {
+  return (
+
+    <div>
+      <h2>statistics</h2>
+      {feedbackGiven ?
+        <div>
+          <p>good {good}</p>
+          <p>neutral {neutral}</p>
+          <p>bad {bad}</p>
+          <p>all {good + neutral + bad}</p>
+          <p>average {average}</p>
+          <p>positive {positive} %</p>
+        </div>
+        :
+        <p>No feedback given</p>
+      }
+    </div>
+
+  )
+}
+
 const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0)
@@ -16,6 +40,7 @@ const App = () => {
   const [bad, setBad] = useState(0)
   const [average, setAverage] = useState(0)
   const [positive, setPositive] = useState(0)
+  const [feedbackGiven, setFeedbackGiven] = useState(false)
 
   const handleGood = () => {
     setGood(good + 1)
@@ -34,6 +59,7 @@ const App = () => {
     ) {
       setAverage(calcAvg(good, neutral, bad))
       setPositive(calcPos(good, neutral, bad))
+      setFeedbackGiven(true)
     }
   }, [good, neutral, bad])
 
@@ -43,13 +69,14 @@ const App = () => {
       <button onClick={handleGood}>good</button>
       <button onClick={handleNeutral}>neutral</button>
       <button onClick={handleBad}>bad</button>
-      <h2>statistics</h2>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {good + neutral + bad}</p>
-      <p>average {average}</p>
-      <p>positive {positive} %</p>
+      <Statistics
+        good={good}
+        neutral={neutral}
+        bad={bad}
+        average={average}
+        positive={positive}
+        feedbackGiven={feedbackGiven}
+      />
     </div>
   )
 }

@@ -9,6 +9,14 @@ function calcPos(good, neutral, bad) {
   return good * 100 / (good + neutral + bad)
 }
 
+const Button = ({ onClickHandler, text }) => (
+  <button onClick={onClickHandler}>{text}</button>
+)
+
+const StatisticsLine = ({ text, value }) => (
+  <p>{text} {value}</p>
+)
+
 const Statistics = (
   { good, neutral, bad, average, positive, feedbackGiven }
 ) => {
@@ -18,12 +26,12 @@ const Statistics = (
       <h2>statistics</h2>
       {feedbackGiven ?
         <div>
-          <p>good {good}</p>
-          <p>neutral {neutral}</p>
-          <p>bad {bad}</p>
-          <p>all {good + neutral + bad}</p>
-          <p>average {average}</p>
-          <p>positive {positive} %</p>
+          <StatisticsLine text="good" value={good} />
+          <StatisticsLine text="neutral" value={neutral} />
+          <StatisticsLine text="bad" value={bad} />
+          <StatisticsLine text="all" value={good + neutral + bad} />
+          <StatisticsLine text="average" value={average} />
+          <StatisticsLine text="positive" value={`${positive} %`} />
         </div>
         :
         <p>No feedback given</p>
@@ -66,9 +74,9 @@ const App = () => {
   return (
     <div>
       <h2>give feedback</h2>
-      <button onClick={handleGood}>good</button>
-      <button onClick={handleNeutral}>neutral</button>
-      <button onClick={handleBad}>bad</button>
+      <Button onClickHandler={handleGood} text="good" />
+      <Button onClickHandler={handleNeutral} text="neutral" />
+      <Button onClickHandler={handleBad} text="bad" />
       <Statistics
         good={good}
         neutral={neutral}

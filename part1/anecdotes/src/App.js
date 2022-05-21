@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const App = () => {
   const anecdotes = [
@@ -12,14 +12,23 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
+  const initialArray = new Array(anecdotes.length).fill(0)
+  const [votes, setVotes] = useState(initialArray)
 
   function handleNext() {
     setSelected(Math.floor(Math.random() * 7))
+  }
+  function handleVote() {
+    const votesCopy = [...votes]
+    votesCopy[selected] += 1
+    setVotes([...votesCopy])
   }
 
   return (
     <div>
       <p>{anecdotes[selected]}</p>
+      <p>has <span>{votes[selected]}</span> votes</p>
+      <button onClick={handleVote}>vote</button>
       <button onClick={handleNext}>next anecdote</button>
     </div>
   )

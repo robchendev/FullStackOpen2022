@@ -14,7 +14,10 @@ const Button = ({ onClickHandler, text }) => (
 )
 
 const StatisticsLine = ({ text, value }) => (
-  <p>{text} {value}</p>
+  <tr>
+    <td>{text}</td>
+    <td>{value}</td>
+  </tr>
 )
 
 const Statistics = (
@@ -25,14 +28,16 @@ const Statistics = (
     <div>
       <h2>statistics</h2>
       {feedbackGiven ?
-        <div>
-          <StatisticsLine text="good" value={good} />
-          <StatisticsLine text="neutral" value={neutral} />
-          <StatisticsLine text="bad" value={bad} />
-          <StatisticsLine text="all" value={good + neutral + bad} />
-          <StatisticsLine text="average" value={average} />
-          <StatisticsLine text="positive" value={`${positive} %`} />
-        </div>
+        <table>
+          <tbody>
+            <StatisticsLine text="good" value={good} />
+            <StatisticsLine text="neutral" value={neutral} />
+            <StatisticsLine text="bad" value={bad} />
+            <StatisticsLine text="all" value={good + neutral + bad} />
+            <StatisticsLine text="average" value={average} />
+            <StatisticsLine text="positive" value={`${positive} %`} />
+          </tbody>
+        </table>
         :
         <p>No feedback given</p>
       }

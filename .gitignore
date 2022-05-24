@@ -1,4 +1,4 @@
-other/
 node_modules
 public
-README.md
+other
+.cache

@@ -1,6 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import AddContact from './components/AddContact'
+import PhoneBook from './components/PhoneBook'
+import SearchFilter from './components/SearchFilter'
 
 const App = () => {
+
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456', id: 1 },
     { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
@@ -8,7 +12,6 @@ const App = () => {
     { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
   ])
 
-  // controls form input element
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState(persons)
@@ -21,10 +24,12 @@ const App = () => {
     else {
       const nameObject = {
         name: newName,
-        number: newNumber
+        number: newNumber,
+        id: persons.length + 1
       }
       setPersons(persons.concat(nameObject))
       setNewName('')
+      setNewNumber('')
     }
   }
 
@@ -44,42 +49,25 @@ const App = () => {
     setFilter(newFilter)
   }
 
+  useEffect(() => {
+    setFilter(persons)
+    document.getElementById('searchName').value = ''
+  }, [persons])
+
   return (
     <div>
-      <h2>Phonebook</h2>
-      <div>
-        <p>
-          filter shown with <input
-            id='searchName'
-            placeholder='Search name...'
-            onChange={handleSearch}
-          />
-        </p>
-      </div>
-      <h2>Add new contact</h2>
-      <form onSubmit={addName}>
-        <div>
-          name: <input
-            value={newName}
-            onChange={handleNameChange}
-          />
-        </div>
-        <div>
-          number: <input
-            value={newNumber}
-            onChange={handleNumberChange}
-          />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      <ul id="filterList">
-        {filter.map(person => (
-          <li key={person.id}>{person.name} {person.number}</li>
-        ))}
-      </ul>
+      <SearchFilter
+        persons={persons}
+        handleSearch={handleSearch}
+      />
+      <AddContact
+        addName={addName}
+        newName={newName}
+        newNumber={newNumber}
+        handleNameChange={handleNameChange}
+        handleNumberChange={handleNumberChange}
+      />
+      <PhoneBook filter={filter} />
     </div>
   )
 }
